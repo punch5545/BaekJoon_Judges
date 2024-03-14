@@ -11,30 +11,41 @@ int main()
 
     std::cin >> strCnt;
 
-    for(int i = 0; i < strCnt; i++)
+    for (int word = 0; word < strCnt; word++)
     {
+        bool breakWord = false;
+        std::string str;
         std::string tmpStr;
-        std::cin >> tmpStr;
+        int strLength = 0;
+        std::cin >> str;
 
-        for(int j = 0; j < tmpStr.length(); j++)
+        int tmpIndex = -1;
+        strLength = str.length();
+
+        tmpStr = str;
+
+        for (int i = 0; i < strLength; i++)
         {
-            bool isDuplicate = false;
-            int index = tmpStr.find(tmpStr[j]);
+            int index = tmpStr.find(str[i]);
             while (index != std::string::npos)
             {
-                tmpStr.replace(index, 1, "");
-                int idx = tmpStr.find(tmpStr[j]);
-                std::cout << idx<< " " << index << " " << tmpStr << " " << tmpStr[j] << std::endl;
-                if(idx != index + 1 && idx != std::string::npos)
+                //std::cout << str << " :: " << index << " :::: " << tmpStr << " :: " << tmpIndex << " :: " << (tmpIndex != index - 1) << std::endl;
+                tmpStr.replace(index, 1, ".");
+                if (tmpIndex != index - 1)
                 {
-                    isDuplicate = true;
+                    breakWord = true;
                 }
-                index = idx;
-            }
+                tmpIndex = index;
 
-            if(!isDuplicate) cnt++;
+                index = tmpStr.find(str[i]);
+            }
+            if (breakWord) break;
         }
-    }  
+
+        //std::cout << "Dupl: " << breakWord << std::endl;
+
+        if (!breakWord) cnt++;
+    }
 
     std::cout << cnt;
 
